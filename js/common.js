@@ -1,22 +1,34 @@
 $(document).ready(function() {
 
+	var days = [
+		'SUN',
+		'MON',
+		'TUE',
+		'WED',
+		'THU',
+		'FRI',
+		'SAT'
+	];
+	
+	d = new Date(); 
+	x = d.getDay(); 
 
-//прилипающие меню
-var $menu = $(".header");
-$(window).scroll(function(){
-  if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
-    $menu.removeClass("default").addClass("fixed");
-  } else if($(this).scrollTop() <= 0 && $menu.hasClass("fixed")) {
-    $menu.removeClass("fixed").addClass("default");
-  }
-  
-});
+	$('.item-schedule').each(function(){
+		var val = $(this).data('name');
+		console.log(val);
+		if (days[x] === val) {
+			$(this).addClass("active");
+		} 
+	  });
+	  
+	  $(".item-question__head").click(function() {
+		$(this).parent().toggleClass("active");
+		$(this).siblings().slideToggle(200);
+		$(this).parent().siblings(".item-question").removeClass("active");
+		$(this).parent().siblings(".item-question").find(".item-question__content").slideUp(200);
+	  });
 
-if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
-    $menu.removeClass("default").addClass("fixed");
-  } else if($(this).scrollTop() <= 0 && $menu.hasClass("fixed")) {
-    $menu.removeClass("fixed").addClass("default");
-  }
+
 
   /*animate*/
 	new WOW().init();
@@ -49,9 +61,6 @@ if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
 	  });
 	}
 
-	//плавный скролл
-	$(".navigat li a").mPageScroll2id();
-
 
 	//кнопка sandwich
 	$(".sandwich").click(function() {
@@ -69,6 +78,17 @@ if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
 		$(".header-bottom").slideUp(200);
 		$(".sandwich").removeClass("active");
 		$(".menu-overlay").fadeOut(200);
+	});
+
+	$(".payment-form .btn-main").click(function(e) {
+		e.preventDefault();
+		$(".total-form").slideDown(200);
+	});
+
+	$(".payment-online .btn-main").click(function(e) {
+		e.preventDefault();
+
+		window.open('payment-total.html');
 	});
 
 	//слайдер
@@ -101,8 +121,6 @@ if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
 	$(".input-phone").mask("+7 (999) 999-99-99");
 
 
-	 // стайлер для select
-	 $('select').styler();
 
 	//Попап менеджер FancyBox
 	//Документация: http://fancybox.net/howto
@@ -112,17 +130,6 @@ if ( $(this).scrollTop() > 0 && $menu.hasClass("default") ){
 		autoFocus: false
 	});
 
-
-	//Кнопка "Наверх"
-	//Документация:
-	//http://api.jquery.com/scrolltop/
-	//http://api.jquery.com/animate/
-	$(".btn_top").click(function () {
-		$("body, html").animate({
-			scrollTop: 0
-		}, 800);
-		return false;
-	});
 
 	objectFitImages();
 
